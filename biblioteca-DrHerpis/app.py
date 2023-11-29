@@ -77,12 +77,21 @@ def view_material_id(IDMaterial):
     return get_material_id(IDMaterial)
     
 @app.route('/materials/<int:IDMaterial>', methods=['DELETE'])
+#somente admins podem deletar dados do banco
 def delete_this_material(IDMaterial):
     return delete_material(IDMaterial)
 
+@app.route('/materials/<int:IDMaterial>', methods=['PUT'])
+# ---> Atualiza material, somente admin e chefes tem acessos
 def upadate_this_material(IDMaterial):
-    return update_material(IDMaterial)
+    material_data = request.json
+    return update_material(IDMaterial, material_data)
 
+
+
+"""
+USUARIOS: Chamadas para usuarios.
+"""
 if __name__ == '__main__':
     app.run(port=5000, host='127.0.0.1', debug=True)
 

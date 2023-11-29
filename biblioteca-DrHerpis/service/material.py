@@ -86,7 +86,7 @@ def delete_material(IDMaterial):
         return jsonify({"error" : str(erro)}), 500
     
 
-def update_material(IDMaterial):
+def update_material(IDMaterial, material_data):
     conexao = getDB()
     cursor = conexao.cursor()
     
@@ -97,18 +97,14 @@ def update_material(IDMaterial):
         conexao.close()
         return jsonify({"message" : "Material não encontrado"}), 404
         
-    material_data = request.json
+    query = "UPDATE MateriaisDidaticos SET Descricao=%s, NumeroSerie=%s, DataAquisicao=%s, EstadoConservacao=%s, LocalizacaoFisica=%s, URIFotoMaterial=%s WHERE IDMaterial=%s"
         
-    query = "UPDATE MateriaisDidaticos SET Descricao=%s, NumeroSerie=%s, DataAquisicao=%s, DataAquisicao=%s, EstadoConservacao=%s, LocalizacaoFisica=%s, URIFotoMaterial=%s WHERE IDMaterial=%s"
-        
-    cursor.execute(query,(Material_data.get('Titulo'),
-            Material_data.get('Autor'),
-            Material_data.get('Descricao'),
-            Material_data.get('Categoria'),
-            Material_data.get('DataAquisicao'),
-            Material_data.get('EstadoConservacao'),
-            Material_data.get('LocalizacaoFisica'),
-            Material_data.get('URIFotoMaterial'),
+    cursor.execute(query,(material_data.get('Descricao'),
+            material_data.get('NumeroSerie'),
+            material_data.get('DataAquisicao'),
+            material_data.get('EstadoConservacao'),
+            material_data.get('LocalizacaoFisica'),
+            material_data.get('URIFotoMaterial'),
             IDMaterial))
         
     conexao.commit()
