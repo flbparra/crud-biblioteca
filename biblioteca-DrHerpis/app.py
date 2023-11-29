@@ -57,13 +57,32 @@ MATERIAS - INSERT, CONSULTA, DELETE, UPDATE
 
 @app.route('/materials/<int:IDMaterial>', methods=['POST'])
 def create_material(IDMaterial):
+    material_data = request.json
     return create_new_material(
         IDMaterial, 
-        Descricao, NumeroSerie, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial)
+        material_data['Descricao'],material_data['NumeroSerie'], material_data['DataAquisicao'],material_data['EstadoConservacao'],
+        material_data['LocalizacaoFisica'],
+        material_data['URIFotoMaterial'])
 
 @app.route('/materials/<int:IDMaterial>', methods=['GET']) 
 def get_material(IDMaterial):
     return get_material_id(IDMaterial)
+
+@app.route('/materials', methods=['GET'])
+def view_materials():
+    return get_all_materials()
+
+@app.route('/materials/<int:IDMaterial>', methods=['GET'])
+def view_material_id(IDMaterial):
+    return get_material_id(IDMaterial)
+    
+@app.route('/materials/<int:IDMaterial>', methods=['DELETE'])
+def delete_this_material(IDMaterial):
+    return delete_material(IDMaterial)
+
+def upadate_this_material(IDMaterial):
+    return update_material(IDMaterial)
+
 if __name__ == '__main__':
     app.run(port=5000, host='127.0.0.1', debug=True)
 

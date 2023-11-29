@@ -1,5 +1,5 @@
 from service.connectBD import getDB
-from flask import jsonify, request, make_response
+from flask import jsonify, request
 import json
 import mysql.connector
 
@@ -12,8 +12,9 @@ def create_new_book(IDLivro, Titulo, Autor, Descricao, Categoria, DataAquisicao,
     cursor.execute(query,(IDLivro, Titulo, Autor, Descricao, Categoria, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URICapaLivro))
     conexao.commit()
     livro_cadastrado = get_book_id(IDLivro)
+    livro_cadastrado = livro_cadastrado.get_json()
     conexao.close()
-    return jsonify({"mensagem" : "Livro cadastrado com suscesso!", "livro": {livro_cadastrado}})
+    return jsonify({"mensage" : "Livro cadastrado com sucesso", "livro" :livro_cadastrado}), 200
 
 
 def get_book_id(IDLivro): 

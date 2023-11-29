@@ -54,7 +54,7 @@ CREATE TABLE Emprestimos (
     IDItem INT,
     DataEmprestimo DATE,
     DataDevolucaoPrevista DATE,
-    StatusSituacao VARCHAR(20) CHECK (StatusSituacao IN ('ATRASADO', 'EM ANDAMENTO', 'BAIXADO')),
+    StatusSituacao VARCHAR(20) CHECK (StatusSituacao IN ('ATRASADO', 'EM ANDAMENTO')),
     PRIMARY KEY (IDUsuario, IDItem),
     FOREIGN KEY (IDUsuario) REFERENCES Usuarios(ID),
     FOREIGN KEY (IDItem) REFERENCES Item(IDItem)
