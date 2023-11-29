@@ -1,7 +1,7 @@
 from flask import Flask, request
 from service.livros import create_new_book, get_book_id, get_all_books, delete_book, update_book
 from service.material import create_new_material, get_material_id, get_all_materials, delete_material, update_material
-
+from service.usuario import create_new_user, get_user_id, get_all_users, delete_user, update_user
 
 app = Flask(__name__)
 
@@ -92,6 +92,37 @@ def upadate_this_material(IDMaterial):
 """
 USUARIOS: Chamadas para usuarios.
 """
+
+@app.route('/user/<int:ID>', methods=['POST'])
+# ---> Create new user
+def create_user(ID):
+    user_data = request.json
+    return create_new_user(ID,
+                       user_data['Nome'], 
+                       user_data['Sobrenome'], 
+                       user_data['Funcao'],
+                       user_data['Login'], 
+                       user_data['Senha'], 
+                       user_data['URIFotoUsuario']
+                       )
+@app.route('/user/<int:ID>', methods=['GET'])
+# Retorna usuarios por ID
+def view_this_user(ID):
+    return get_user_id(ID)
+@app.route('/users', methods=['GET'])
+# --> Retorna todos os usuarios
+def view_all_users():
+    return get_all_users()
+@app.route('/user/<int:ID>', methods=['DELETE'])
+# --> Delete a user por ID
+def delete_this_user(ID):
+    return delete_user(ID)
+@app.route('/user/<int:ID>', methods=['PUT'])
+# --> Update a user por ID (não a senha e nem o login)
+def upadate_this_user(ID):
+    return update_user(ID)
+
+
 if __name__ == '__main__':
     app.run(port=5000, host='127.0.0.1', debug=True)
 
