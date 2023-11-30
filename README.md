@@ -3,10 +3,10 @@
 ### Tecnologias Usadas
 
 - __Python__: Instale o python na sua maquina se não o tiver (_logo abaixo tem links que podem a te ajudar a instalar em sua máquina_).
-<br>
-[Windows](https://www.python.org/downloads/)
-<br>
-[Linux](https://python.org.br/instalacao-linux/)
+
+> [Windows](https://www.python.org/downloads/)
+
+> [Linux](https://python.org.br/instalacao-linux/)
 
 - __MYSQL__: Você pode instalar o [MYSQL em seu site oficial](https://dev.mysql.com/downloads/mysql/).
 
