@@ -7,10 +7,14 @@
 [Windows](https://www.python.org/downloads/)
 <br>
 [Linux](https://python.org.br/instalacao-linux/)
+
 - __MYSQL__: Você pode instalar o [MYSQL em seu site oficial](https://dev.mysql.com/downloads/mysql/).
+
 - __VSCode__: Opcional Pode usar qualquer editor de código, porém recomendo usar o [VSCODE](https://code.visualstudio.com/) ou [Pycharm-Community](https://www.jetbrains.com/pt-br/pycharm/).
 <br>
+
 - __MYSQL WorkBench__: (Opcional podendo ser qualquer um de sua escolha) SGBD usado para fazer consultas durante os teste e também para criar o DB ([_click aqui para baixar_](https://dev.mysql.com/downloads/workbench/)).
+
 - __[Insomnia](https://docs.insomnia.rest/insomnia/install) / [Postman](https://www.postman.com/downloads/)__: Qualquer um dos dois é uma bom escolha, usando apenas para fazer request com Json para teste. 
 
 #### Bibliotecas e dependências do projeto:
