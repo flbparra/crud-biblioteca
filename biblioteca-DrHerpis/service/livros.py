@@ -9,11 +9,19 @@ def create_new_book(IDLivro, Titulo, Autor, Descricao, Categoria, DataAquisicao,
     conexao = getDB()
     cursor = conexao.cursor()
     query = "INSERT INTO Livros(IDLivro, Titulo, Autor, Descricao, Categoria, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URICapaLivro) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    
     cursor.execute(query,(IDLivro, Titulo, Autor, Descricao, Categoria, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URICapaLivro))
     conexao.commit()
     livro_cadastrado = get_book_id(IDLivro)
     livro_cadastrado = livro_cadastrado.get_json()
+
+    #------------------------------------------------------------------------------
+    # Script para adicionar Livro também na tabela Item
+    adicionarEmItem = "INSERT INTO Item(Tipo, IDLivro, StatusItem) VALUES (%s, %s, %s)"
+    cursor.execute(adicionarEmItem,("Livro", IDLivro, "Disponivel"))
+    conexao.commit()
     conexao.close()
+
     return jsonify({"mensage" : "Livro cadastrado com sucesso", "livro" :livro_cadastrado}), 200
 
 
@@ -29,7 +37,7 @@ def get_book_id(IDLivro):
         infoBook.append({
             "IDLivro": IDLivro,
             "Titulo": Titulo,
-            "Autor": DataAquisicao,
+            "Autor": Autor,
             "Descricao": Descricao,
             "Categoria": Categoria,
             "DataAquisicao": DataAquisicao,
@@ -75,6 +83,7 @@ def delete_book(IDLivro):
         if not livro_exite:
             return jsonify({"message" : "Livro não encontrado"}), 404
         
+        cursor.execute(f"DELETE FROM Item WHERE IDLivro = {IDLivro}")
         cursor.execute(f"DELETE FROM Livros WHERE IDLivro = {IDLivro}")
         conexao.commit()
         
