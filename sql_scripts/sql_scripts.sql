@@ -17,6 +17,7 @@ CREATE TABLE MateriaisDidaticos (
     IDMaterial INT NOT NULL PRIMARY KEY,
     Descricao TEXT,
     NumeroSerie VARCHAR(20),
+    Categoria  VARCHAR(50) not null,
     DataAquisicao DATE,
     EstadoConservacao VARCHAR(50),
     LocalizacaoFisica VARCHAR(100) NOT NULL,
@@ -28,6 +29,7 @@ CREATE TABLE Item (
     Tipo VARCHAR(20),
     IDLivro INT,
     IDMaterial INT,
+    StatusItem VARCHAR(25),
     FOREIGN KEY (IDLivro) REFERENCES Livros(IDLivro),
     FOREIGN KEY (IDMaterial) REFERENCES MateriaisDidaticos(IDMaterial)
 );
