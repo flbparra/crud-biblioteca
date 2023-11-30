@@ -1,33 +1,42 @@
 from service.connectBD import getDB
 from flask import jsonify, request
+import mysql.connector
 
 
-def create_new_material(IDMaterial, Descricao, NumeroSerie, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial):
+def create_new_material(IDMaterial, Descricao, NumeroSerie, Categoria, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial):
     
     conexao = getDB()
     cursor = conexao.cursor()
-    query = "INSERT INTO MateriaisDidaticos(IDMaterial, Descricao, NumeroSerie, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+    query = "INSERT INTO MateriaisDidaticos(IDMaterial, Descricao, NumeroSerie, Categoria, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"
     
-    cursor.execute(query, (IDMaterial, Descricao ,NumeroSerie, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial))
+    cursor.execute(query, (IDMaterial, Descricao ,NumeroSerie, Categoria, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial))
     conexao.commit()
     material_cadastrado = get_material_id(IDMaterial)
     material_cadastrado = material_cadastrado.get_json()
+    
+    #----------------------------------------------------------------------------------------
+    # Script para adicionar Material também na tabela Item
+    adicionarEmItem = "INSERT INTO Item(Tipo, IDMaterial, StatusItem) VALUES (%s, %s, %s)"
+    cursor.execute(adicionarEmItem,("Material", IDMaterial, "Disponivel"))
+    conexao.commit()
     conexao.close()
+    
     return jsonify({"mensage" : "Material cadastrado com sucesso", "material" :material_cadastrado}), 200
     
 def get_material_id(IDMaterial):
     conexao = getDB()
     cursor = conexao.cursor()
     
-    cursor.execute(f"SELECT IDMaterial, Descricao ,NumeroSerie, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial FROM MateriaisDidaticos WHERE IDMaterial ={IDMaterial}")
+    cursor.execute(f"SELECT IDMaterial, Descricao ,NumeroSerie, Categoria, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial FROM MateriaisDidaticos WHERE IDMaterial ={IDMaterial}")
     infoMaterial= []
     
     for row in cursor:
-        IDMaterial, Descricao ,NumeroSerie, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial = row
+        IDMaterial, Descricao ,NumeroSerie, Categoria, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial = row
         infoMaterial.append({
             "IDMaterial": IDMaterial,
             "Descricao": Descricao,
             "NumeroSerie": NumeroSerie,
+            "Categoria": Categoria,
             "DataAquisicao": DataAquisicao,
             "EstadoConservacao": EstadoConservacao,
             "LocalizacaoFisica": LocalizacaoFisica,
@@ -41,18 +50,19 @@ def get_all_materials():
     conexao = getDB()
     cursor  = conexao.cursor()
     
-    cursor.execute("SELECT IDMaterial,Descricao, NumeroSerie, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial FROM MateriaisDidaticos")
+    cursor.execute("SELECT IDMaterial,Descricao, NumeroSerie, Categoria, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial FROM MateriaisDidaticos")
     
     allMateriais=[]
     
     for row in cursor:
-        IDMaterial,Descricao, NumeroSerie, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial = row
+        IDMaterial,Descricao, NumeroSerie, Categoria, DataAquisicao, EstadoConservacao, LocalizacaoFisica, URIFotoMaterial = row
         
         allMateriais.append(
             {
             "IDMaterial": IDMaterial,
             "Descricao": Descricao,
             "NumeroSerie": NumeroSerie,
+            "Categoria": Categoria,
             "DataAquisicao": DataAquisicao,
             "EstadoConservacao": EstadoConservacao,
             "LocalizacaoFisica": LocalizacaoFisica,
@@ -77,6 +87,7 @@ def delete_material(IDMaterial):
         if not Material_exite:
             return jsonify({"message" : "Material não encontrado"}), 404
         
+        cursor.execute(f"DELETE FROM Item WHERE IDLivro = {IDMaterial}")
         cursor.execute(f"DELETE FROM MateriaisDidaticos WHERE IDMaterial = {IDMaterial}")
         conexao.commit()
         
@@ -86,7 +97,7 @@ def delete_material(IDMaterial):
         return jsonify({"error" : str(erro)}), 500
     
 
-def update_material(IDMaterial, material_data):
+def update_material(IDMaterial):
     conexao = getDB()
     cursor = conexao.cursor()
     
@@ -96,11 +107,14 @@ def update_material(IDMaterial, material_data):
     if not material_exite:
         conexao.close()
         return jsonify({"message" : "Material não encontrado"}), 404
-        
-    query = "UPDATE MateriaisDidaticos SET Descricao=%s, NumeroSerie=%s, DataAquisicao=%s, EstadoConservacao=%s, LocalizacaoFisica=%s, URIFotoMaterial=%s WHERE IDMaterial=%s"
+    
+    material_data = request.json
+
+    query = "UPDATE MateriaisDidaticos SET Descricao=%s, NumeroSerie=%s, Categoria=%s, DataAquisicao=%s, EstadoConservacao=%s, LocalizacaoFisica=%s, URIFotoMaterial=%s WHERE IDMaterial=%s"
         
     cursor.execute(query,(material_data.get('Descricao'),
             material_data.get('NumeroSerie'),
+            material_data.get('Categoria'),
             material_data.get('DataAquisicao'),
             material_data.get('EstadoConservacao'),
             material_data.get('LocalizacaoFisica'),
