@@ -2,8 +2,10 @@ from flask import Flask, request
 from service.livros import create_new_book, get_book_id, get_all_books, delete_book, update_book
 from service.material import create_new_material, get_material_id, get_all_materials, delete_material, update_material
 from service.usuario import create_new_user, get_user_id, get_all_users, delete_user, update_user
-
+from service.login import render_login
+import mysql.connector
 app = Flask(__name__)
+
 
 
 # /HOME criado
@@ -11,6 +13,10 @@ app = Flask(__name__)
 def index():
     return "HELLO AMIGO!"
 
+@app.route('/login', methods=['POST'])
+def login_this_user():
+    login_data = request.json
+    return render_login(login_data)
 
 @app.route('/books', methods=['GET'])
 def view_books():
