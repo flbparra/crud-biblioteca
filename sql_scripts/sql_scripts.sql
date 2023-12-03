@@ -38,6 +38,7 @@ CREATE TABLE Usuarios (
     ID INT NOT NULL PRIMARY KEY,
     Nome VARCHAR(50),
     Sobrenome VARCHAR(50),
+    ---Email VARCHAR(100),
     Funcao VARCHAR(20),
     Login VARCHAR(50) UNIQUE,
     Senha VARCHAR(255),  
