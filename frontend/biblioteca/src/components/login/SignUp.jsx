@@ -2,6 +2,32 @@ import React, { useState}from "react";
 
 export default function SignUpForm(){
   const [funcao,setFuncao] = useState("");
+  
+  const buttonClick = async () => {
+    const response = await fetch(`http://127.0.0.1:5000/login`,{
+      method: "POST",
+      body: JSON.stringify({
+        "Login": user,
+        "Senha": password
+        
+      }),
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((response)=>{
+      if(response.status === 404){
+        alert("Usuário não encontrado")
+      }
+      else if(response.status===401){
+        alert("Senha incorreta")
+      }
+      else{
+        sessionStorage.setItem("userData",response.body)
+      }
+    })
+  }
+  
   return(
     <div>
       <form>
@@ -15,16 +41,20 @@ export default function SignUpForm(){
           <label htmlFor="senha">
             Senha:
           </label>
-          <input type="password" id="senha" name="senha" autoComplete="senha" placeholder="Senha" /><br />
+          <input type="password" id="senha" name="senha" autoComplete="senha" placeholder="Senha" />
         </div>
+        <div>
         <label htmlFor="nome">
           Nome:
         </label>
-        <input type="text" id="nome" name="nome" autoComplete="nome" placeholder="Nome" /><br />
+        <input type="text" id="nome" name="nome" autoComplete="nome" placeholder="Nome" />
+        </div>
+        <div>
         <label htmlFor="sobrenome">
           Sobrenome:
         </label>
-        <input type="text" id="sobrenome" name="sobrenome" autoComplete="sobrenome" placeholder="Sobrenome" /><br />
+        <input type="text" id="sobrenome" name="sobrenome" autoComplete="sobrenome" placeholder="Sobrenome" />
+        </div>
         <div onChange={(e)=>setFuncao(e.target.value)}> 
           <label htmlFor="funcao">
             Função:
