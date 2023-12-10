@@ -4,9 +4,10 @@ from service.material import create_new_material, get_material_id, get_all_mater
 from service.usuario import create_new_user, get_user_id, get_all_users, delete_user, update_user
 from service.login import render_login
 import mysql.connector
+from flask_cors import CORS
+
 app = Flask(__name__)
-
-
+CORS(app)
 
 # /HOME criado
 @app.route('/')

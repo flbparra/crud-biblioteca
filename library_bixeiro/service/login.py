@@ -20,7 +20,7 @@ def render_login(data):
         #verifica se a senha é igual a encriptada pelo banco.
         if bcrypt.check_password_hash(usuario['Senha'], user_password):
         
-            return jsonify({"message" : f"Login realizado com sucesso! Bem vindo {usuario['Funcao']}"}), 200
+            return jsonify({"message" : f"Login realizado com sucesso! Bem vindo {usuario['Funcao']}","id": usuario["ID"]}), 200
     
         else:
             return jsonify({"message" : "Login ou senha incorreto"}), 401
