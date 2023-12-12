@@ -124,8 +124,27 @@ def update_book(IDLivro):
     return jsonify({"message" : "Livro atualizado"})
         
         
-def get_book_cartegory(cartegoria):
-    conexão = getDB()
+def get_book_category(categoria):
+    conexao = getDB()
     cursor = conexao.cursor()
     
-    return "OII"
+    cursor.execute("SELECT IDLivro, Titulo, Autor, LocalizacaoFisica, Categoria, URICapaLivro FROM Livros WHERE Categoria = %s", (categoria,))
+    
+    books_category = []
+    
+    for row in cursor:
+        IDLivros, Titulo, Autor, LocalizacaoFisica, Categoria, URICapaLivro = row
+        books_category.append({
+            "IDLivros": IDLivros,
+            "Titulo": Titulo,
+            "Autor": Autor,
+            "LocalizacaoFisica": LocalizacaoFisica,
+            "Categoria": Categoria,
+            "URICapaLivro": URICapaLivro
+        })
+    
+    conexao.close()
+    
+    return jsonify({"Livros": books_category})
+
+
