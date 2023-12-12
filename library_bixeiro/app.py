@@ -1,9 +1,14 @@
 from flask import Flask, request
-from service.livros import create_new_book, get_book_id, get_all_books, delete_book, update_book, get_book_category
+
+from service.livros import create_new_book, get_book_id, get_all_books, delete_book, update_book, get_book_category, get_books_titles
+
 from service.material import create_new_material, get_material_id, get_all_materials, delete_material, update_material
+
 from service.usuario import create_new_user, get_user_id, get_all_users, delete_user, update_user
 from service.login import render_login
+
 import mysql.connector
+
 app = Flask(__name__)
 
 
@@ -28,6 +33,11 @@ def view_books():
 # ---> Função para visualizar livro por id
 def view_book_id(IDLivro):
     return get_book_id(IDLivro)
+
+@app.route("/books/<string:titulo>", methods=["GET"])
+# ---> Função para visualizar livros por titulo
+def view_books_title(titulo):
+    return get_books_titles(titulo)
 
 @app.route("/books/<string:categoria>", methods=["GET"])
 # ---> Retorna todos que tem as categorias cadastrados no banco de dados
