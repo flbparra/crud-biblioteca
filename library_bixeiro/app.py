@@ -1,10 +1,17 @@
 from flask import Flask, request
-from service.livros import create_new_book, get_book_id, get_all_books, delete_book, update_book
+
+from service.livros import create_new_book, get_book_id, get_all_books, delete_book, update_book, get_books_category, get_books_titles, get_books_author
+
 from service.material import create_new_material, get_material_id, get_all_materials, delete_material, update_material
+
 from service.usuario import create_new_user, get_user_id, get_all_users, delete_user, update_user
 from service.login import render_login
+
 import mysql.connector
+<<<<<<< HEAD
 from flask_cors import CORS
+=======
+>>>>>>> 91648de31f554f2eb457286cff231f1573869b2f
 
 app = Flask(__name__)
 CORS(app)
@@ -21,6 +28,7 @@ def login_this_user():
 
 @app.route('/books', methods=['GET'])
 def view_books():
+# ---> Retorna todos os livros cadastrados no banco de dados
     return get_all_books()
 
 
@@ -29,6 +37,21 @@ def view_books():
 def view_book_id(IDLivro):
     return get_book_id(IDLivro)
 
+@app.route("/books/<string:titulo>", methods=["GET"])
+# ---> Função para visualizar livros por titulo
+def view_books_title(titulo):
+    return get_books_titles(titulo)
+
+@app.route("/books/authors/<string:author>", methods=["GET"])
+# ---> Função para visualizar livros por autores
+def view_books_author(author):
+    return get_books_author(author)
+
+@app.route("/books/<string:categoria>", methods=["GET"])
+# ---> Retorna todos que tem as categorias cadastrados no banco de dados
+def view_books_category(categoria):
+    return get_book_category(categoria)
+    
 
 @app.route("/books/<int:IDLivro>", methods=["POST"])
 # ---> Função para criar livro
