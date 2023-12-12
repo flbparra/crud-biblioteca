@@ -124,5 +124,8 @@ def update_book(IDLivro):
     return jsonify({"message" : "Livro atualizado"})
         
         
+def get_book_cartegory(cartegoria):
+    conexão = getDB()
+    cursor = conexao.cursor()
     
-    
+    return "OII"
