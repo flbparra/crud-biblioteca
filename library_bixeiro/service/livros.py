@@ -123,8 +123,12 @@ def update_book(IDLivro):
     conexao.close()
     return jsonify({"message" : "Livro atualizado"})
 
+
+"""
+BUSCAS DOS LIVROS: 
+"""
 #buscar por cartegoria - atualizado: 12/12/2023 
-def get_book_category(categoria):
+def get_books_category(categoria):
     conexao = getDB()
     cursor = conexao.cursor()
     
@@ -144,8 +148,11 @@ def get_book_category(categoria):
         })
     
     conexao.close()
+    if books_category:    
+        return jsonify({"Livros referentes a essa cartegoria: ": books_category})
     
-    return jsonify({"Livros": books_category})
+    return jsonify({"message": f"Nenhum livro com esse author '{cartegoria}' foi encontrado."})
+
 
 def get_books_titles(pesquisa):
     
@@ -169,5 +176,32 @@ def get_books_titles(pesquisa):
 
     conexao.close()
     
-    return jsonify({"Livros com esse titulo disponivel": books_titles})
+    if books_titles:
+        return jsonify({"Livros com esse titulo disponivel": books_titles})
 
+    return jsonify({"message": f"Nenhum livro com esse título '{pesquisa}' foi encontrado."})
+    
+    
+def get_books_author(pesquisa):
+    
+    conexao = getDB()
+    cursor = conexao.cursor()
+    
+    cursor.execute("SELECT IDLivro, Titulo, Autor, LocalizacaoFisica, Categoria, URICapaLivro FROM Livros WHERE Autor LIKE %s", ('%' + pesquisa + '%',) )
+    
+    books_author = []
+    for row in cursor:
+        IDLivros, Titulo, Autor, LocalizacaoFisica, Categoria, URICapaLivro = row
+        books_author.append({
+            "IDLivros": IDLivros,
+            "Titulo": Titulo,
+            "Autor": Autor,
+            "LocalizacaoFisica": LocalizacaoFisica,
+            "Categoria": Categoria,
+            "URICapaLivro": URICapaLivro
+        })
+    
+    if books_author:
+        return jsonify({"Livros com esse author disponível:" : books_author})
+    
+    return jsonify({"message": f"Nenhum livro com esse author '{pesquisa}' foi encontrado."})
