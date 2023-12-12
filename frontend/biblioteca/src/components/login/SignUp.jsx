@@ -10,6 +10,7 @@ export default function SignUpForm(){
         "Login": user,
         "Senha": password
         
+        
       }),
       mode: "cors",
       headers: {
