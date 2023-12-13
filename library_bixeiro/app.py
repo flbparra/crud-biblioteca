@@ -5,6 +5,9 @@ from service.livros import create_new_book, get_book_id, get_all_books, delete_b
 from service.material import create_new_material, get_material_id, get_all_materials, delete_material, update_material, get_materials_category
 
 from service.usuario import create_new_user, get_user_id, get_all_users, delete_user, update_user
+
+from service.emprestimos import create_new_emprestimo, get_emprestimo, delete_emprestimo, update_emprestimo
+
 from service.login import render_login
 
 import mysql.connector
@@ -46,7 +49,7 @@ def view_books_author(author):
 @app.route("/books/<string:categoria>", methods=["GET"])
 # ---> Retorna todos que tem as categorias cadastrados no banco de dados
 def view_books_category(categoria):
-    return get_book_category(categoria)
+    return get_books_category(categoria)
     
 
 @app.route("/books/<int:IDLivro>", methods=["POST"])
@@ -152,6 +155,31 @@ def delete_this_user(ID):
 # --> Update a user por ID (não a senha e nem o login)
 def upadate_this_user(ID):
     return update_user(ID)
+
+"""
+EMPRESTIMOS: Chamadas para emprestimo.
+"""
+
+@app.route('/emprestimo', methods=['POST'])
+# --> função para criar emprestimo
+def create_emprestimo():
+    emprestimo_data = request.json
+    return create_new_emprestimo(emprestimo_data)
+
+@app.route('/emprestimo/<int:IDUsuario>', methods=['GET'])
+# --> função para consultar emprestimos de usuário
+def get_all_emprestimo(IDUsuario):
+    return get_emprestimo(IDUsuario)
+
+@app.route('/emprestimo/<int:IDItem>', methods=['DELETE'])
+# --> função para deletar emprestimo
+def delete_this_emprestimo(IDItem):
+    return delete_emprestimo(IDItem)
+
+@app.route('/emprestimo/<int:IDItem>', methods=['PUT'])
+# --> função para renovar emprestimo
+def update_this_emprestimo(IDItem):
+    return update_emprestimo(IDItem)
 
 
 if __name__ == '__main__':
