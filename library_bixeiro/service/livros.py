@@ -125,6 +125,7 @@ def update_book(IDLivro):
 
 
 """
+
 BUSCAS DOS LIVROS: 
 """
 #buscar por cartegoria - atualizado: 12/12/2023 

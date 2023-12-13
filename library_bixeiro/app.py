@@ -2,16 +2,15 @@ from flask import Flask, request
 
 from service.livros import create_new_book, get_book_id, get_all_books, delete_book, update_book, get_books_category, get_books_titles, get_books_author
 
-from service.material import create_new_material, get_material_id, get_all_materials, delete_material, update_material
+from service.material import create_new_material, get_material_id, get_all_materials, delete_material, update_material, get_materials_category
 
 from service.usuario import create_new_user, get_user_id, get_all_users, delete_user, update_user
 from service.login import render_login
 
 import mysql.connector
-from flask_cors import CORS
+
 
 app = Flask(__name__)
-CORS(app)
 
 # /HOME criado
 @app.route('/')
@@ -39,7 +38,7 @@ def view_book_id(IDLivro):
 def view_books_title(titulo):
     return get_books_titles(titulo)
 
-@app.route("/books/authors/<string:author>", methods=["GET"])
+@app.route("/books/<string:author>", methods=["GET"])
 # ---> Função para visualizar livros por autores
 def view_books_author(author):
     return get_books_author(author)
@@ -79,7 +78,7 @@ def update_this_book(IDLivro):
 
 
 """
-MATERIAS - INSERT, CONSULTA, DELETE, UPDATE
+MATERIAS - INSERT, CONSULTAS, DELETE, UPDATE
 """
 
 @app.route('/materials/<int:IDMaterial>', methods=['POST'])
@@ -102,6 +101,11 @@ def view_materials():
 @app.route('/materials/<int:IDMaterial>', methods=['GET'])
 def view_material_id(IDMaterial):
     return get_material_id(IDMaterial)
+
+@app.route('/materials/<string:categoria>', methods=['GET'])
+# Retorna materiais por cartegoria
+def view_material_cartegoria(categoria):
+    return get_materials_category(categoria)
     
 @app.route('/materials/<int:IDMaterial>', methods=['DELETE'])
 #somente admins podem deletar dados do banco

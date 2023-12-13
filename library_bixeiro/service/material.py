@@ -124,7 +124,38 @@ def update_material(IDMaterial):
     conexao.commit()
     conexao.close()
     return jsonify({"message" : "Material atualizado"})
+
+
+"""
+Buscas por cartegoria, NumeroSerie
+"""
+def get_materials_category(pesquisa):
+    conexao = getDB()
+    cursor = conexao.cursor()
+    
+    cursor.execute("SELECT IDMaterial, NumeroSerie, URIFotoMaterial, Categoria FROM MateriaisDidaticos WHERE Categoria = %s", (pesquisa,))
+    
+    materials_category = []
+    
+    for row in cursor:
         
+        IDMaterial, NumeroSerie, URIFotoMaterial, Categoria = row
+        
+        materials_category.append({
+            
+            "IDMaterial": IDMaterial,
+            "NumeroSerie": NumeroSerie,
+            "URIFotoMaterial": URIFotoMaterial,
+            "Categoria": Categoria
+        })
+        
+    conexao.close()
+    
+    if materials_category:
+        return jsonify({"Materiais encontrados:": materials_category})
+    
+    return jsonify({"message": f"Nenhum livro com esse author '{pesquisa}' foi encontrado."})
+    
         
     
     
