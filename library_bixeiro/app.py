@@ -8,10 +8,7 @@ from service.usuario import create_new_user, get_user_id, get_all_users, delete_
 from service.login import render_login
 
 import mysql.connector
-<<<<<<< HEAD
 from flask_cors import CORS
-=======
->>>>>>> 91648de31f554f2eb457286cff231f1573869b2f
 
 app = Flask(__name__)
 CORS(app)
