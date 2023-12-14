@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fazer Empréstimo</title>
+    <style>
+        /* Adicione estilos conforme necessário */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .loan-form {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="loan-form">
+        <h1>Fazer Empréstimo</h1>
+        <!-- Adicione o formulário de empréstimo aqui -->
+    </div>
+</body>
+</html>

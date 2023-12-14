@@ -15,7 +15,7 @@ import mysql.connector
 
 app = Flask(__name__)
 
-# /HOME criado
+# /HOME criadoe
 @app.route('/')
 def index():
     return "HELLO AMIGO!"
