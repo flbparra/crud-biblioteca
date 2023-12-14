@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 from service.livros import create_new_book, get_book_id, get_all_books, delete_book, update_book, get_books_category, get_books_titles, get_books_author
 
@@ -8,13 +8,17 @@ from service.usuario import create_new_user, get_user_id, get_all_users, delete_
 
 from service.emprestimos import create_new_emprestimo, get_emprestimo, delete_emprestimo, update_emprestimo
 
-from service.login import render_login, render_logoff
+from service.login import login, logoff
 
 import mysql.connector
 
 
 app = Flask(__name__)
 
+
+"""
+LOGIN
+"""
 # /HOME criadoe
 @app.route('/')
 def index():
@@ -22,8 +26,8 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login_this_user():
-    login_data = request.json
-    return render_login(login_data)
+    data = request.json
+    return render_template('template/', login(data))
 
 @app.route('/logout', methods=['POST'])
 # --> Faz logoff
@@ -31,31 +35,34 @@ def logout_this_user():
     return logoof()
 
 
-@app.route('/books/<ID>', methods=['GET'])
+"""Livros: Consultas, Inserção, Edição e Delete
+"""
+
+@app.route('/books/', methods=['GET'])
 def view_books():
 # ---> Retorna todos os livros cadastrados no banco de dados
-    return get_all_books()
+    return render_template( 'template/',books = get_all_books())
 
 
 @app.route("/books/<int:IDLivro>", methods=["GET"])
 # ---> Função para visualizar livro por id
 def view_book_id(IDLivro):
-    return get_book_id(IDLivro)
+    return render_template('template/', book=get_book_id(IDLivro))
 
 @app.route("/books/<string:titulo>", methods=["GET"])
 # ---> Função para visualizar livros por titulo
 def view_books_title(titulo):
-    return get_books_titles(titulo)
+    return render_template('template/', books= get_books_titles(titulo))
 
 @app.route("/books/<string:author>", methods=["GET"])
 # ---> Função para visualizar livros por autores
 def view_books_author(author):
-    return get_books_author(author)
+    return render_template('template/', books= get_books_author(author))
 
 @app.route("/books/<string:categoria>", methods=["GET"])
 # ---> Retorna todos que tem as categorias cadastrados no banco de dados
 def view_books_category(categoria):
-    return get_books_category(categoria)
+    return render_template('template/', books= get_books_category(categoria))
     
 
 @app.route("/books/<int:IDLivro>", methods=["POST"])
@@ -101,20 +108,20 @@ def create_material(IDMaterial):
 
 @app.route('/materials/<int:IDMaterial>', methods=['GET']) 
 def get_material(IDMaterial):
-    return get_material_id(IDMaterial)
+    return render_template('template/', material= get_material_id(IDMaterial))
 
 @app.route('/materials', methods=['GET'])
 def view_materials():
-    return get_all_materials()
+    return render_template('template/', materials= get_all_materials())
 
 @app.route('/materials/<int:IDMaterial>', methods=['GET'])
 def view_material_id(IDMaterial):
-    return get_material_id(IDMaterial)
+    return render_template('template/', material= get_material_id(IDMaterial))
 
 @app.route('/materials/<string:categoria>', methods=['GET'])
 # Retorna materiais por cartegoria
 def view_material_cartegoria(categoria):
-    return get_materials_category(categoria)
+    return render_template('template/', materials= get_materials_category(categoria))
     
 @app.route('/materials/<int:IDMaterial>', methods=['DELETE'])
 #somente admins podem deletar dados do banco
@@ -148,11 +155,11 @@ def create_user(ID):
 @app.route('/user/<int:ID>', methods=['GET'])
 # Retorna usuarios por ID
 def view_this_user(ID):
-    return get_user_id(ID)
+    return render_template('template/', user= get_user_id(ID))
 @app.route('/users', methods=['GET'])
 # --> Retorna todos os usuarios
 def view_all_users():
-    return get_all_users()
+    return render_template('template/', users= get_all_users())
 @app.route('/user/<int:ID>', methods=['DELETE'])
 # --> Delete a user por ID
 def delete_this_user(ID):
@@ -175,7 +182,7 @@ def create_emprestimo():
 @app.route('/emprestimo/<int:IDUsuario>', methods=['GET'])
 # --> função para consultar emprestimos de usuário
 def get_all_emprestimo(IDUsuario):
-    return get_emprestimo(IDUsuario)
+    return render_template('template/', emprestimo= get_emprestimo(IDUsuario))
 
 @app.route('/emprestimo/<int:IDItem>', methods=['DELETE'])
 # --> função para deletar emprestimo

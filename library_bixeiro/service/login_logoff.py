@@ -6,7 +6,7 @@ bcrypt = Bcrypt()
 
 auth = None
 
-def render_login(data):
+def login(data):
     
     global auth
     
@@ -37,7 +37,7 @@ def render_login(data):
         return jsonify({"message" : "Usuario não encontrado"}), 400
     
     
-    def render_logoff():
+    def logoff():
         
         global auth
         auth = None

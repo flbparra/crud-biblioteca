@@ -90,7 +90,7 @@ def delete_book(IDLivro):
         return jsonify({"message" : "Livro deletado com sucesso!"}), 200
     
     except mysql.connector.Error as erro:
-        return jsonify({"error" : str(erro)}), 500
+        return jsonify({"error - livro não encontrado" : str(erro)}), 500
     
 
 def update_book(IDLivro):
