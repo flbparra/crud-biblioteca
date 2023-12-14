@@ -37,14 +37,14 @@ def login(data):
         return jsonify({"message" : "Usuario não encontrado"}), 400
     
     
-    def logoff():
+def logoff():
         
-        global auth
-        auth = None
+    global auth
+    auth = None
         
-        session.pop('user_id', None)
+    session.pop('user_id', None)
     
-        return jsonify({"message" :"Logout realizado com sucesso"}), 200
+    return jsonify({"message" :"Logout realizado com sucesso"}), 200
     
     
     

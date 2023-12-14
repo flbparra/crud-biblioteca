@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            
+        }
+
+        .div {
+            background-color: #111112;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 50px 60px;
+        }
+
+        @media (max-width: 991px) {
+            .div {
+                padding: 0 20px;
+            }
+        }
+
+        .div-2 {
+            display: flex;
+            width: 100%;
+            max-width: 580px;
+            flex-direction: column;
+            margin: 66px 0 0; /* Ajustando a margem superior */
+            text-align: center;
+            align-items: center; /* Centralizando verticalmente */
+        }
+
+        @media (max-width: 991px) {
+            .div-2 {
+                margin: 40px 0;
+            }
+        }
+
+        .div-3 {
+            color: #fff;
+            font: 800 64px Inter, sans-serif;
+            margin: 20px 0; /* Ajustando a margem para centralizar melhor */
+        }
+
+        @media (max-width: 991px) {
+            .div-3 {
+                max-width: 100%;
+                font-size: 40px;
+            }
+        }
+
+
+        .div-4 {
+            border-radius: 50px;
+            background-color: #d9d9d9;
+            align-self: start;
+            display: flex;
+            width: 100%;
+            max-width: 556px;
+            flex-direction: column;
+            align-items: center;
+            margin: 76px 0 0 19px;
+            padding: 50px 80px;
+            
+        }
+
+        @media (max-width: 991px) {
+            .div-4 {
+                margin-top: 40px;
+                padding: 0 20px;
+            }
+        }
+
+        .div-5,
+        .div-6,
+        .div-7 {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .div-5 {
+            color: #111112;
+            margin-top: 48px;
+            font: 800 64px Inter, sans-serif;
+        }
+
+        @media (max-width: 991px) {
+            .div-5 {
+                font-size: 40px;
+                margin-top: 40px;
+            }
+        }
+
+        .input-login,
+        .div-7 {
+            color: #000;
+            white-space: nowrap;
+            border-radius: 10px;
+            background-color: rgba(97, 91, 91, 0.4);
+            margin-top: 16px;
+            padding: 31px 60px 31px 24px;
+            font: 500 24px Inter, sans-serif;
+        }
+
+        @media (max-width: 991px) {
+            .input-login,
+            .div-7 {
+                white-space: initial;
+                margin-top: 10px;
+                padding: 0 20px;
+            }
+        }
+
+        .div-8 {
+            color: #fff;
+            white-space: nowrap;
+            border-radius: 10px;
+            background-color: rgba(14, 35, 226, 0.59);
+            justify-content: center;
+            margin: 26px 0 29px;
+            padding: 23px 49px 23px 42px;
+            font: 800 24px Inter, sans-serif;
+        }
+
+        @media (max-width: 991px) {
+            .div-8 {
+                white-space: initial;
+                margin: 20px 0;
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="div">
+        <div class="div-2">
+            <div class="div-3">LIVRARIA DO BIXO</div>
+                <div class="div-4">
+                    <div class="input-login">
+                        <label for="login">Login</label>
+                        <input type="text" id="login" name="login">
+                    </div>
+                    <div class="input-login">
+                        <label for="password">Senha</label>
+                        <input type="text" id="password" name="password">
+                    </div>
+                    <div class="div-8">LOGAR</div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>

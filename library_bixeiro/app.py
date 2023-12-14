@@ -8,7 +8,7 @@ from service.usuario import create_new_user, get_user_id, get_all_users, delete_
 
 from service.emprestimos import create_new_emprestimo, get_emprestimo, delete_emprestimo, update_emprestimo
 
-from service.login import login, logoff
+from service.login_logoff import login, logoff
 
 import mysql.connector
 
@@ -22,7 +22,7 @@ LOGIN
 # /HOME criadoe
 @app.route('/')
 def index():
-    return render_template('template/')
+    return render_template('home.html')
 
 @app.route('/login', methods=['POST'])
 def login_this_user():
