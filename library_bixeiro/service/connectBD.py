@@ -12,6 +12,7 @@ def getDB():
             password='br4b0@',
             database='ame',
         )
+        
         return db_conexao
     
     except mysql.connector.Error as erro:
