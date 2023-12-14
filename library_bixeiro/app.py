@@ -22,7 +22,7 @@ LOGIN
 # /HOME criadoe
 @app.route('/')
 def index():
-    return "HELLO AMIGO!"
+    return render_template('template/')
 
 @app.route('/login', methods=['POST'])
 def login_this_user():
@@ -32,7 +32,7 @@ def login_this_user():
 @app.route('/logout', methods=['POST'])
 # --> Faz logoff
 def logout_this_user():
-    return logoof()
+    return render_template('template/' ,logoof())
 
 
 """Livros: Consultas, Inserção, Edição e Delete
