@@ -8,7 +8,7 @@ from service.usuario import create_new_user, get_user_id, get_all_users, delete_
 
 from service.emprestimos import create_new_emprestimo, get_emprestimo, delete_emprestimo, update_emprestimo
 
-from service.login import render_login
+from service.login import render_login, render_logoff
 
 import mysql.connector
 
@@ -25,7 +25,13 @@ def login_this_user():
     login_data = request.json
     return render_login(login_data)
 
-@app.route('/books', methods=['GET'])
+@app.route('/logout', methods=['POST'])
+# --> Faz logoff
+def logout_this_user():
+    return logoof()
+
+
+@app.route('/books/<ID>', methods=['GET'])
 def view_books():
 # ---> Retorna todos os livros cadastrados no banco de dados
     return get_all_books()
