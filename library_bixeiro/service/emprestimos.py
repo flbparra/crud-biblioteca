@@ -2,7 +2,7 @@ from service.connectBD import getDB
 from flask import jsonify
 
 def create_new_emprestimo(data):
-
+    
     IDUsuario = data.get('IDUsuario')
     IDItem = data.get('IDItem')
 
