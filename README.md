@@ -1,5 +1,8 @@
 # Trabalho do Banco de Dados:
 
+> [Diagrama do Projeto]((https://github.com/flbparra/Diagrama-BD-Biblioteca))
+
+
 ### Tecnologias Usadas
 
 - __Python__: Instale o python na sua maquina se não o tiver (_logo abaixo tem links que podem a te ajudar a instalar em sua máquina_).
