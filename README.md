@@ -1,6 +1,6 @@
 # Trabalho do Banco de Dados:
 
-> [Diagrama do Projeto]((https://github.com/flbparra/Diagrama-BD-Biblioteca))
+[Diagrama do Projeto]((https://github.com/flbparra/Diagrama-BD-Biblioteca))
 
 
 ### Tecnologias Usadas
